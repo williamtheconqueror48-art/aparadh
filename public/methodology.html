@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Methodology &amp; Sources — APARADH</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Zilla+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .meth h3{font-family:var(--disp); font-weight:400; font-size:24px; margin:34px 0 10px;}
+  .meth p, .meth li{font-size:16.5px;}
+  .meth ul{padding-left:22px;}
+  .meth li{margin-bottom:6px;}
+  .meth table{width:100%; border-collapse:collapse; font-size:15px; margin:12px 0;}
+  .meth th{text-align:left; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--mut); padding:8px 10px 8px 0; border-bottom:2px solid var(--line);}
+  .meth td{padding:7px 10px 7px 0; border-bottom:1px solid #3a352a; font-variant-numeric:tabular-nums; vertical-align:top;}
+  .back{display:inline-block; margin-top:26px; border:3px solid var(--line); padding:10px 18px; font-weight:700; text-decoration:none; text-transform:uppercase; letter-spacing:.06em; font-size:14px;}
+  .back:hover{background:var(--ink); color:var(--bg);}
+</style>
+</head>
+<body>
+<header class="masthead"><div class="wrap">
+  <div class="mast-top micro">APARADH · METHODOLOGY &amp; SOURCES</div>
+  <h1 class="mast-title" style="font-size:clamp(40px,7vw,72px)">How this was built</h1>
+  <div class="mast-sub">Every number on APARADH traces to a table in the source PDFs. This page is the receipt.</div>
+</div></header>
+
+<main class="wrap meth">
+  <h3>1 · The source</h3>
+  <p>All crime figures come from the <b>National Crime Records Bureau (Ministry of Home Affairs), <i>Crime in India 2024</i></b> — the latest edition, released 6 May 2026. State/UT tables were taken from <b>Volume I</b> (IPC/BNS crimes) and <b>Volume II</b> (special-law and victim-group chapters):</p>
+  <ul>
+    <li><a href="https://www.ncrb.gov.in/uploads/files/1CrimeinIndia2024-VolumeI.pdf">Volume I</a> — 604 pages, 17.8 MB</li>
+    <li><a href="https://www.ncrb.gov.in/uploads/files/2CrimeinIndia2024-VolumeII.pdf">Volume II</a> — 574 pages, 14 MB</li>
+  </ul>
+  <p>No login, CAPTCHA, or paywall stands in front of these files — they are direct public downloads from ncrb.gov.in.</p>
+
+  <h3>2 · What was parsed</h3>
+  <p><b>24 crime heads × 36 states/UTs = 864 figures</b>, plus all-India totals, taken from these tables (PDF page numbers refer to the downloaded files):</p>
+  <table>
+    <thead><tr><th>Crime head</th><th>NCRB table</th><th>PDF page</th><th>Rate base</th></tr></thead>
+    <tbody>
+      <tr><td>All cognizable crimes</td><td>1A.3</td><td>Vol I, p.47</td><td>per lakh population</td></tr>
+      <tr><td>IPC / BNS offences</td><td>1A.1</td><td>Vol I, p.45</td><td>per lakh population</td></tr>
+      <tr><td>Special &amp; Local Laws</td><td>1A.2</td><td>Vol I, p.46</td><td>per lakh population</td></tr>
+      <tr><td>Murder</td><td>2A.1</td><td>Vol I, p.273</td><td>per lakh population</td></tr>
+      <tr><td>Kidnapping &amp; abduction</td><td>2C.1</td><td>Vol I, p.297</td><td>per lakh population</td></tr>
+      <tr><td>Crimes against women</td><td>3A.1</td><td>Vol I, p.329</td><td>per lakh women</td></tr>
+      <tr><td>Crimes against children</td><td>4A.1</td><td>Vol I, p.463</td><td>per lakh children</td></tr>
+      <tr><td>Crimes against senior citizens</td><td>6A.1</td><td>Vol II, p.73</td><td>per lakh senior citizens</td></tr>
+      <tr><td>Crimes against SCs</td><td>7A.1</td><td>Vol II, p.143</td><td>per lakh SC population</td></tr>
+      <tr><td>Crimes against STs</td><td>7C.1</td><td>Vol II, p.253</td><td>per lakh ST population</td></tr>
+      <tr><td>Economic offences</td><td>8A.1</td><td>Vol II, p.365</td><td>per lakh population</td></tr>
+      <tr><td>Cybercrime</td><td>9A.1</td><td>Vol II, p.421</td><td>per lakh population</td></tr>
+      <tr><td>Offences against the state</td><td>10A.1</td><td>Vol II, p.521</td><td>per lakh population</td></tr>
+      <tr><td>Rape · Attempt to rape · Dowry deaths · Cruelty by husband/relatives · Rioting · Theft · Extortion · Robbery · Dacoity · Burglary · Cheating &amp; fraud</td><td>1A.4 (11 heads)</td><td>Vol I, pp.48–49, 52–53, 100–103, 106–107, 114–115</td><td>per lakh population (rape group: per lakh women)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3 · How it was parsed — and checked</h3>
+  <ul>
+    <li>Extraction with <b>pdfplumber</b>, driven by table-aware column maps (script: <span class="mut">scripts/parse_cii2024.py</span> in the repo). The 2024 edition straddles two criminal codes, so tables carry <b>IPC + BNS + Total</b> columns — both splits are stored.</li>
+    <li><b>Integrity check on every table:</b> the 36 parsed state/UT rows were summed and compared against the NCRB's own TOTAL STATE(S), TOTAL UT(S) and TOTAL ALL INDIA rows. <b>All checks passed on all 24 tables; zero rows dropped, zero figures estimated.</b></li>
+    <li>Spot-checked against published national figures: 58,85,867 total crimes, 27,049 murders, 4,41,534 crimes against women, 1,01,928 cybercrimes, 55,698 vs SCs, 9,966 vs STs, 5,737 dowry deaths — all match.</li>
+    <li>One layout quirk handled explicitly: the NCRB wraps <i>"D&amp;N Haveli and Daman &amp; Diu"</i> across lines in four different ways across tables; the parser joins all four variants deterministically (never by guessing).</li>
+  </ul>
+
+  <h3>4 · The map</h3>
+  <ul>
+    <li>State/UT polygons: <b>geoBoundaries IND-ADM1</b>, sourced from the DataMeet India community / Election Commission of India — a Survey-of-India-based dataset. Country outline: geoBoundaries IND-ADM0 (bbox-verified identical). Licence: <b>CC BY 2.5 IN</b>.</li>
+    <li>The outline shown is the <b>official Indian boundary</b> (PoK within the J&amp;K boundary, Ladakh as a separate UT). Geometry simplified for the web (39 KB); five tiny UTs get clickable marker dots in addition to their true polygons.</li>
+    <li>Choropleth bands are <b>quintiles</b> — five equal-count groups of the 36 states/UTs — computed live from the selected head's rates. Flat fills, no gradients.</li>
+  </ul>
+
+  <h3>5 · What this is not</h3>
+  <ul>
+    <li><b>Registered crime ≠ committed crime.</b> NCRB counts FIRs. States differ in how readily police register cases, so cross-state comparisons need the NCRB's own caution (printed in every table): states/UTs may not be compared purely on crime figures.</li>
+    <li><b>Rates use NCRB's mid-year projected populations</b> (Report of the Technical Group on Population Projections). Different heads use different denominators — the rate base is labelled on every figure.</li>
+    <li><b>Not yet parsed:</b> the remaining ~90 minor IPC/BNS sub-heads of table 1A.4 (variable sub-column layouts, e.g. kidnapping sub-categories) and the metropolitan-city tables. Deliberately excluded rather than half-parsed.</li>
+    <li>2024 figures straddle the IPC→BNS transition (new codes in force from 1 July 2024); the IPC/BNS split is shown per state where the table provides it.</li>
+  </ul>
+
+  <h3>6 · Reproduce it</h3>
+  <p>The <a href="https://github.com/williamtheconqueror48-art/aparadh">public repo</a> contains the parser, the map builder, the raw download script references, and this site's source. Re-running <span class="mut">scripts/parse_cii2024.py</span> against the two NCRB PDFs regenerates <span class="mut">data/aparadh_2024.json</span> byte-for-byte (modulo PDF text-extraction versions).</p>
+
+  <a class="back" href="index.html">← Back to the explorer</a>
+  <div style="height:60px"></div>
+</main>
+
+<footer><div class="wrap fine mut foot-base">APARADH · Crime in India 2024 explorer · Data: NCRB · Not an official government website.</div></footer>
+</body>
+</html>

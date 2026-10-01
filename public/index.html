@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APARADH — Crime in India 2024 · NCRB Data Explorer</title>
+<meta name="description" content="State-by-state explorer of Crime in India 2024 (NCRB): 24 crime heads, 36 states & UTs, official India map. Every figure traces to its NCRB table.">
+<meta property="og:title" content="APARADH — Crime in India 2024">
+<meta property="og:description" content="Every cognizable crime in India, mapped state by state. NCRB 2024 data, zero fabrication.">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Zilla+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top micro">NATIONAL CRIME RECORDS BUREAU · MINISTRY OF HOME AFFAIRS · GOVT. OF INDIA</div>
+    <h1 class="mast-title">APARADH</h1>
+    <div class="mast-sub">CRIME IN INDIA <b>2024</b> — EVERY STATE, EVERY CRIME HEAD, ON THE MAP.<br>
+    <span class="mut">अपराध · 58,85,867 cognizable crimes · 36 states &amp; UTs · 24 crime heads · 864 verified figures</span></div>
+    <nav class="mast-nav micro">
+      <a href="#national">NATIONAL</a><span class="sep">/</span>
+      <a href="#explorer">MAP</a><span class="sep">/</span>
+      <a href="#table">STATES TABLE</a><span class="sep">/</span>
+      <a href="methodology.html">METHODOLOGY &amp; SOURCES</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ NATIONAL ============ -->
+  <section id="national" class="block">
+    <div class="block-head"><span class="micro">01 · THE COUNTRY</span><h2>India, 2024</h2></div>
+    <div class="stat-grid" id="national-stats"></div>
+    <div class="two-col">
+      <div class="panel">
+        <div class="micro panel-label">TOTAL COGNIZABLE CRIMES · 2022–2024</div>
+        <div id="trend-spark"></div>
+        <div class="fine mut" id="trend-cap"></div>
+      </div>
+      <div class="panel">
+        <div class="micro panel-label">BIGGEST YEAR-ON-YEAR MOVERS · 2023 → 2024</div>
+        <div id="movers"></div>
+        <div class="fine mut">Change in registered cases. A fall can mean less crime <i>or</i> less reporting — the NCRB caveat, stated plainly.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPLORER ============ -->
+  <section id="explorer" class="block">
+    <div class="block-head"><span class="micro">02 · THE MAP</span><h2>Click a state. Any state.</h2>
+    <p class="lede">Pick a crime head. The map recolours by <b>crime rate</b> — cases per lakh population — so a small state and a large one can be compared honestly. Click any state or UT for its full profile.</p></div>
+
+    <div class="micro panel-label">CRIME HEAD</div>
+    <div id="head-groups"></div>
+
+    <div class="map-layout">
+      <div class="map-box panel">
+        <div id="map-holder"></div>
+        <div id="map-legend" class="legend"></div>
+        <div class="fine mut legend-note">Five equal-count bands (quintiles) across 36 states/UTs · rate = <span id="legend-ratebase"></span> · hover for figures, click for profile</div>
+      </div>
+      <aside class="state-panel panel" id="state-panel" aria-live="polite"></aside>
+    </div>
+  </section>
+
+  <!-- ============ TABLE ============ -->
+  <section id="table" class="block">
+    <div class="block-head"><span class="micro">03 · ALL STATES</span><h2>The full table</h2>
+    <p class="lede">Every state and UT, sortable. Click a column header to sort.</p></div>
+    <div class="table-tools">
+      <input id="state-search" type="search" placeholder="Search states…" aria-label="Search states">
+    </div>
+    <div class="table-scroll"><table id="states-table" class="dtable"></table></div>
+    <div class="fine mut">Rates are per lakh population (total-population heads). UT = Union Territory.</div>
+  </section>
+
+  <section id="heads-note" class="block">
+    <div class="block-head"><span class="micro">04 · COVERAGE</span><h2>What is — and isn't — here</h2></div>
+    <div class="panel fine" id="coverage-list"></div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <div class="micro">APARADH</div>
+      <p class="fine">Built from the National Crime Records Bureau's <b>Crime in India 2024</b> (Vols. I &amp; II). Public data only. Every figure traces to its NCRB table and page — see <a href="methodology.html">methodology &amp; sources</a>.</p>
+    </div>
+    <div>
+      <div class="micro">MAP</div>
+      <p class="fine">State/UT boundaries: geoBoundaries IND-ADM1 (DataMeet India / Election Commission of India), country outline IND-ADM0. CC BY 2.5 IN. Official Indian outline.</p>
+    </div>
+    <div>
+      <div class="micro">RULE</div>
+      <p class="fine">Zero fabricated data. If a figure can't be traced to the source PDF, it isn't on this page.</p>
+    </div>
+  </div>
+  <div class="wrap fine mut foot-base">APARADH · Crime in India 2024 explorer · Data: NCRB · Not an official government website.</div>
+</footer>
+
+<div id="tooltip" class="tooltip" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>
