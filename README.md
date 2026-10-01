@@ -2,7 +2,7 @@
 
 **अपराध.** A brutalist, dark, serif explorer of the National Crime Records Bureau's *Crime in India 2024* — every cognizable crime in the country, mapped state-by-state on the official Indian outline.
 
-**Live:** https://aparadh.vercel.app *(deployment pending — see below)*
+**Live:** https://aparadh.vercel.app
 
 ## What it is
 
